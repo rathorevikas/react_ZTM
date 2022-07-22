@@ -18,6 +18,7 @@ const SignUpFrom = () => {
   const [formValues, setFormValues] = useState(defaultFormValues);
   const { displayName, email, password, confirmPassword } = formValues;
 
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormValues({ ...formValues, [name]: value });
@@ -36,7 +37,7 @@ const SignUpFrom = () => {
         email,
         password
       );
-      const userDocRef = createUserDocumentFromAuth(user, { displayName });
+      const userDocRef = await createUserDocumentFromAuth(user, { displayName });
       setFormValues(defaultFormValues);
     } catch (error) {
       if (error.code === "auth/email-already-in-use") {

@@ -23,22 +23,24 @@ const SignInFrom = () => {
   };
 
   const googleSignInHandler = async () => {
-    const { user } = await signInWithGooglePopup();
-    await createUserDocumentFromAuth(user);
+    await signInWithGooglePopup();
   };
 
   const formSubmitHandler = async (event) => {
     event.preventDefault();
     try {
-      const response = await signInUserWithEmailAndPassword(email, password);
-      console.log(response);
+      const { user } = await signInUserWithEmailAndPassword(email, password);
       setFormValues(defaultFormValues);
     } catch (error) {
-      if(error.code === "auth/wrong-password"){
-        alert("Invalid Password");
-      }
-      else if(error.code === "auth/user-not-found"){
-        alert("Invalid UserName");
+      switch (error.code) {
+        case "auth/wrong-password":
+          alert("incorrect password for email");
+          break;
+        case "auth/user-not-found":
+          alert("no user associated with this email");
+          break;
+        default:
+          console.log(error);
       }
     }
   };
@@ -66,7 +68,11 @@ const SignInFrom = () => {
         />
         <div className="buttons-container">
           <Button type="submit">Sign in</Button>
-          <Button type="button" buttonType="google" onClick={googleSignInHandler}>
+          <Button
+            type="button"
+            buttonType="google"
+            onClick={googleSignInHandler}
+          >
             Google Sign in
           </Button>
         </div>
