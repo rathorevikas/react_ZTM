@@ -3,9 +3,9 @@ import {
   createAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
 } from "../../utils/firebase/firebase.utils";
-import "./signup.styles.scss";
 import Button from "../../button/button.component.jsx";
 import FormInput from "../../form-input/form-input.component";
+import { SignupContainer } from "./signup.styles.jsx";
 
 const defaultFormValues = {
   displayName: "",
@@ -17,7 +17,6 @@ const defaultFormValues = {
 const SignUpFrom = () => {
   const [formValues, setFormValues] = useState(defaultFormValues);
   const { displayName, email, password, confirmPassword } = formValues;
-
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -37,7 +36,7 @@ const SignUpFrom = () => {
         email,
         password
       );
-      const userDocRef = await createUserDocumentFromAuth(user, { displayName });
+      await createUserDocumentFromAuth(user, { displayName });
       setFormValues(defaultFormValues);
     } catch (error) {
       if (error.code === "auth/email-already-in-use") {
@@ -49,7 +48,7 @@ const SignUpFrom = () => {
   };
 
   return (
-    <div className="signup-container">
+    <SignupContainer>
       <h2>Do not have an Account ?</h2>
       <span>SignUp with your Email and Password</span>
       <form onSubmit={formSubmitHandler}>
@@ -90,7 +89,7 @@ const SignUpFrom = () => {
         />
         <Button type="submit">Submit</Button>
       </form>
-    </div>
+    </SignupContainer>
   );
 };
 
