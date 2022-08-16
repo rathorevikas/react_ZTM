@@ -33,7 +33,7 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const firebaseApp = initializeApp(firebaseConfig);
+initializeApp(firebaseConfig);
 
 const provider = new GoogleAuthProvider();
 
@@ -66,13 +66,13 @@ export const getCategoriesAndDocument = async () => {
   const q = query(collectionRef);
 
   const querySanpshot = await getDocs(q);
+  return querySanpshot.docs.map((docSanpshot) => docSanpshot.data());
 
-  const categoryMap = querySanpshot.docs.reduce((acc, docSanpshot) => {
-    const { title, items } = docSanpshot.data();
-    acc[title.toLowerCase()] = items;
-    return acc;
-  }, {});
-  return categoryMap;
+  // .reduce((acc, docSanpshot) => {
+  //   const { title, items } = docSanpshot.data();
+  //   acc[title.toLowerCase()] = items;
+  //   return acc;
+  // }, {});
 };
 
 export const createUserDocumentFromAuth = async (
@@ -81,10 +81,10 @@ export const createUserDocumentFromAuth = async (
 ) => {
   const userDocRef = doc(db, "users", userAuth.uid);
 
-  // console.log(userDocRef);
+   console.log(userDocRef);
 
   const userSnapshot = await getDoc(userDocRef);
-  // console.log(userSnapshot);
+   console.log(userSnapshot);
   // console.log(userSnapshot.exists());
 
   if (!userSnapshot.exists()) {
@@ -103,7 +103,7 @@ export const createUserDocumentFromAuth = async (
     }
   }
 
-  return userDocRef;
+  return userSnapshot;
 };
 
 export const createAuthUserWithEmailAndPassword = async (email, password) => {
@@ -122,3 +122,16 @@ export const signOutUser = async () => await signOut(auth);
 
 export const onAuthStateChangeListener = (callback) =>
   onAuthStateChanged(auth, callback);
+
+export const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = onAuthStateChanged(
+      auth,
+      (userAuth) => {
+        unsubscribe();
+        resolve(userAuth);
+      },
+      reject
+    );
+  });
+};

@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import {
-  createUserDocumentFromAuth,
-  signInUserWithEmailAndPassword,
-  signInWithGooglePopup,
-} from "../../utils/firebase/firebase.utils";
+import { useDispatch } from "react-redux";
+// import {
+//   signInUserWithEmailAndPassword,
+//   signInWithGooglePopup,
+// } from "../../utils/firebase/firebase.utils";
 import Button from "../../button/button.component.jsx";
 import FormInput from "../../form-input/form-input.component";
 import { BUTTON_TYPE_CLASSES } from "../../button/button.component.jsx";
 import { ButtonsContainer, SigninContainer } from "./signin.styles";
+import { emailSignInStart, googleSignInStart } from "../../../store/user/user.action";
 
 const defaultFormValues = {
   email: "",
@@ -15,6 +16,7 @@ const defaultFormValues = {
 };
 
 const SignInFrom = () => {
+  const dispatch = useDispatch();
   const [formValues, setFormValues] = useState(defaultFormValues);
   const { email, password } = formValues;
 
@@ -24,13 +26,15 @@ const SignInFrom = () => {
   };
 
   const googleSignInHandler = async () => {
-    await signInWithGooglePopup();
+    // await signInWithGooglePopup();
+    dispatch(googleSignInStart());
   };
 
   const formSubmitHandler = async (event) => {
     event.preventDefault();
     try {
-      const { user } = await signInUserWithEmailAndPassword(email, password);
+      // await signInUserWithEmailAndPassword(email, password);
+      dispatch(emailSignInStart(email,password))
       setFormValues(defaultFormValues);
     } catch (error) {
       switch (error.code) {
@@ -48,7 +52,7 @@ const SignInFrom = () => {
 
   return (
     <SigninContainer>
-      <h2>I already have an Acoount</h2>
+      <h2>I already have an Account</h2>
       <span>Sign in with your Email and Password page</span>
       <form onSubmit={formSubmitHandler}>
         <FormInput

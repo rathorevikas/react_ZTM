@@ -4,8 +4,32 @@ import Navigation from "./components/routes/navigation/navigation.component";
 import Authentication from "./components/routes/authentication/authentication.component";
 import Shop from "./components/routes/shop/shop.component";
 import Checkout from "./components/routes/checkout/checkout.component";
+import { useEffect } from "react";
+import {
+  createUserDocumentFromAuth,
+  getCurrentUser,
+  onAuthStateChangeListener,
+} from "./components/utils/firebase/firebase.utils";
+import { checkUserSession } from "./store/user/user.action";
+import { useDispatch } from "react-redux/es/exports";
 
 const App = () => {
+  const dispatch = useDispatch();
+  //AUTHENTICATION USING REDUX THUNK
+  //   useEffect(() => {
+  //     const unsubscribe = onAuthStateChangeListener((user) => {
+  //       if (user) {
+  //         createUserDocumentFromAuth(user);
+  //       }
+  //       dispatch(setCurrentUser(user));
+  //     });
+  //     return unsubscribe;
+  //   }, []);
+
+  useEffect(() => {
+    dispatch(checkUserSession());
+  }, []);
+
   return (
     <Routes>
       <Route path="/" element={<Navigation />}>

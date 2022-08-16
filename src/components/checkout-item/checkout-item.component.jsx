@@ -1,16 +1,38 @@
-
-
-import React, { useContext } from "react";
-import { CartContext } from "../../context/cartContext";
-import { Arrow, BaseSpan, CheckOutItemContainer, ImageContainer, QuantitySpan, RemoveButton, Value } from "./checkout-item.styles";
+import React from "react";
+import { useSelector } from "react-redux/es/hooks/useSelector";
+import { useDispatch } from "react-redux/es/hooks/useDispatch";
+// import { CartContext } from "../../context/cartContext";
+import {
+  addItemToCart,
+  clearCartFromItem,
+  removeItemFromCart,
+} from "../../store/cart/cart.action";
+import { selectCartItems } from "../../store/cart/cart.selector";
+import {
+  Arrow,
+  BaseSpan,
+  CheckOutItemContainer,
+  ImageContainer,
+  QuantitySpan,
+  RemoveButton,
+  Value,
+} from "./checkout-item.styles";
 
 const CheckoutItem = ({ cartItem }) => {
   const { name, quantity, price, imageUrl } = cartItem;
-  const { clearCartItem, addItemToCart, removeItemFromCart } =
-    useContext(CartContext);
-  const addItemHandler = () => addItemToCart(cartItem);
-  const removeItemHandler = () => removeItemFromCart(cartItem);
-  const clearItemHandler = () => clearCartItem(cartItem);
+  // const { clearCartFromItem, addItemToCart, removeItemFromCart } =
+  //   useContext(CartContext);
+  const cartItems = useSelector(selectCartItems);
+  const dispatch = useDispatch();
+
+  const addItemHandler = () => dispatch(addItemToCart(cartItems, cartItem));
+
+  const removeItemHandler = () =>
+    dispatch(removeItemFromCart(cartItems, cartItem));
+
+  const clearItemHandler = () =>
+    dispatch(clearCartFromItem(cartItems, cartItem));
+
   return (
     <CheckOutItemContainer>
       <ImageContainer>
@@ -18,18 +40,12 @@ const CheckoutItem = ({ cartItem }) => {
       </ImageContainer>
       <BaseSpan>{name}</BaseSpan>
       <QuantitySpan>
-        <Arrow onClick={removeItemHandler}>
-          &#10094;
-        </Arrow>
+        <Arrow onClick={removeItemHandler}>&#10094;</Arrow>
         <Value>{quantity}</Value>
-        <Arrow onClick={addItemHandler}>
-          &#10095;
-        </Arrow>
+        <Arrow onClick={addItemHandler}>&#10095;</Arrow>
       </QuantitySpan>
       <BaseSpan>{price}</BaseSpan>
-      <RemoveButton onClick={clearItemHandler}>
-        &#10005;
-      </RemoveButton>
+      <RemoveButton onClick={clearItemHandler}>&#10005;</RemoveButton>
     </CheckOutItemContainer>
   );
 };
