@@ -10,8 +10,8 @@ import {
 import {
   selectCartCount,
   selectCartIsOpen,
-} from "../../store/cart/cart.selector.js";
-import { setIsCartOpen } from "../../store/cart/cart.action.js";
+} from "../../store/cart/cart.selector";
+import { setIsCartOpen } from "../../store/cart/cart.action";
 
 const CartIcon = () => {
   // const { isCartOpen, setIsCartOpen, cartItemsCount } = useContext(CartContext);

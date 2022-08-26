@@ -14,9 +14,9 @@ import CartDropdown from "../../cart-dropdown/cart-dropdown.component";
 // import { signOutUser } from "../../utils/firebase/firebase.utils";
 // import { CartContext } from "../../../context/cartContext";
 import { useSelector } from "react-redux/es/hooks/useSelector.js";
-import { selectCurrentUser } from "../../../store/user/user.selector.js";
-import { selectCartIsOpen } from "../../../store/cart/cart.selector.js";
-import { signOutStart } from "../../../store/user/user.action.js";
+import { selectCurrentUser } from "../../../store/user/user.selector";
+import { selectCartIsOpen } from "../../../store/cart/cart.selector";
+import { signOutStart } from "../../../store/user/user.action";
 
 const Navigation = () => {
   // const { currentUser } = useContext(UserContext);
