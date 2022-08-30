@@ -7,7 +7,7 @@ import {
   signOutSuccess,
   signUpFailed,
 } from "./user.action";
-import { USER_ACTION_TYPE } from "./user.type";
+
 
 export type UserState = {
   currentUser: UserData | null;

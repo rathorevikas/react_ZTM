@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { useDispatch } from "react-redux";
 // import {
 //   signInUserWithEmailAndPassword,
 //   signInWithGooglePopup,
 // } from "../../utils/firebase/firebase.utils";
-import Button from "../../button/button.component.jsx";
+import Button from "../../button/button.component";
 import FormInput from "../../form-input/form-input.component";
-import { BUTTON_TYPE_CLASSES } from "../../button/button.component.jsx";
+import { BUTTON_TYPE_CLASSES } from "../../button/button.component";
 import { ButtonsContainer, SigninContainer } from "./signin.styles";
 import { emailSignInStart, googleSignInStart } from "../../../store/user/user.action";
+import { AuthError, AuthErrorCodes } from "firebase/auth";
 
 const defaultFormValues = {
   email: "",
@@ -20,7 +21,7 @@ const SignInFrom = () => {
   const [formValues, setFormValues] = useState(defaultFormValues);
   const { email, password } = formValues;
 
-  const handleChange = (event) => {
+  const handleChange = (event:ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormValues({ ...formValues, [name]: value });
   };
@@ -30,18 +31,18 @@ const SignInFrom = () => {
     dispatch(googleSignInStart());
   };
 
-  const formSubmitHandler = async (event) => {
+  const formSubmitHandler = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
       // await signInUserWithEmailAndPassword(email, password);
       dispatch(emailSignInStart(email,password))
       setFormValues(defaultFormValues);
     } catch (error) {
-      switch (error.code) {
-        case "auth/wrong-password":
+      switch ((error as AuthError).code) {
+        case AuthErrorCodes.INVALID_PASSWORD:
           alert("incorrect password for email");
           break;
-        case "auth/user-not-found":
+        case AuthErrorCodes.INVALID_EMAIL:
           alert("no user associated with this email");
           break;
         default:

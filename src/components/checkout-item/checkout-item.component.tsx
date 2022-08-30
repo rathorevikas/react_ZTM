@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useDispatch } from "react-redux/es/hooks/useDispatch";
 // import { CartContext } from "../../context/cartContext";
@@ -17,8 +17,13 @@ import {
   RemoveButton,
   Value,
 } from "./checkout-item.styles";
+import { CartItemsType } from "../../store/cart/cart.type";
 
-const CheckoutItem = ({ cartItem }) => {
+type CheckoutItemProps = {
+  cartItem: CartItemsType
+}
+
+const CheckoutItem :FC<CheckoutItemProps> = ({ cartItem }) => {
   const { name, quantity, price, imageUrl } = cartItem;
   // const { clearCartFromItem, addItemToCart, removeItemFromCart } =
   //   useContext(CartContext);

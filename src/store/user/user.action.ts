@@ -1,5 +1,4 @@
 import { User } from "firebase/auth";
-import { type } from "os";
 import {
   AdditionalInformation,
   UserData,
@@ -75,7 +74,7 @@ export const emailSignInStart = withMatcher(
 );
 
 export const signInSuccess = withMatcher(
-  (user:UserData): SignInSuccess => createAction(USER_ACTION_TYPE.SIGN_IN_SUCCESS, user)
+  (user:UserData & {id:string}): SignInSuccess => createAction(USER_ACTION_TYPE.SIGN_IN_SUCCESS, user)
 );
 
 export const signInFailed = withMatcher(

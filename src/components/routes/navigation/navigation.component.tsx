@@ -1,11 +1,10 @@
-import React from "react";
 import { Outlet } from "react-router-dom";
 import {
   LogoContainer,
   NavigationContainer,
   NavLink,
   NavLinks,
-} from "./navigation.styles.jsx";
+} from "./navigation.styles";
 import { useDispatch } from "react-redux/es/exports.js";
 import { ReactComponent as CrwnLogo } from "../../../assets/crown.svg";
 import CartIcon from "../../cart-icon/cart-icon.component";
@@ -41,7 +40,7 @@ const Navigation = () => {
           ) : (
             <NavLink to="/auth">SIGN IN</NavLink>
           )}
-          <CartIcon className="nav-link" />
+          <CartIcon />
         </NavLinks>
         {isCartOpen && <CartDropdown />}
       </NavigationContainer>

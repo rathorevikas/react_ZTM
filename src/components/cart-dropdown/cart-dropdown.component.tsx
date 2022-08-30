@@ -1,5 +1,3 @@
-import "./cart-dropdown.styles.jsx";
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../button/button.component";
 // import { CartContext } from "../../context/cartContext";
@@ -8,7 +6,7 @@ import {
   CartDropdownContainer,
   CartItems,
   ErrorMessage,
-} from "./cart-dropdown.styles.jsx";
+} from "./cart-dropdown.styles";
 import { useSelector } from "react-redux";
 import { selectCartItems } from "../../store/cart/cart.selector";
 
