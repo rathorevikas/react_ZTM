@@ -27,6 +27,10 @@ export const ImageContainer = styled.div`
 
 export const BaseSpan = styled.span`
   width: 23%;
+
+  @media screen and (max-width: 800px) {
+    width: 27%;
+  }
 `;
 
 export const QuantitySpan = styled(BaseSpan)`

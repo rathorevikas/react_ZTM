@@ -13,6 +13,8 @@ export const SigninContainer = styled.div`
 export const ButtonsContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  width: 95%;
+  margin-bottom: 80px;
 `;
 
 // .signin-container {
